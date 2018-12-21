@@ -46,6 +46,7 @@ RUN pip install  \
     ipykernel==4.10.0
 
 COPY . ${HOME}
-RUN chown -R ${NB_UID} ${HOME}
 RUN python -m ipykernel install
+
+RUN chown -R ${NB_UID} ${HOME}
 USER ${NB_USER}
