@@ -1,16 +1,15 @@
 name: learnedsamplingdistributions
 
 base:
-  system: ubuntu
-  version: 16.04
-  cuda: 8.0
-  cudnn: 6
+  ubuntu: 16.04
+  cuda: 8.0-devel
+  cudnn: 6-devel
 
-apt-packages:
+apt:
   - python-setuptools
   - python-dev
 
-pip-packages:
+pip:
   - tensorflow-gpu==1.4
   - matplotlib==2.2.3
   - ipython==5.8.0
