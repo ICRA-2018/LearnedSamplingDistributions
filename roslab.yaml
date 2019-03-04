@@ -14,6 +14,7 @@ pip:
   - matplotlib==2.2.3
   - ipython==5.8.0
   - ipykernel==4.10.0
+  - tornado==5.1.1
 
 custom:
   - python -m ipykernel install
