@@ -6,14 +6,15 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-RUN apt-get update && apt-get -yq dist-upgrade \
- && apt-get install -yq --no-install-recommends \
-	locales python-pip cmake \
-	python3-pip python3-setuptools git build-essential \
+RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -yq dist-upgrade \
+ && apt-get -o Acquire::ForceIPv4=true install -yq --no-install-recommends \
+	locales cmake git build-essential \
+    python-pip \
+	python3-pip python3-setuptools \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install jupyterlab bash_kernel \
+RUN pip3 install jupyterlab==0.35.4 bash_kernel==0.7.1 tornado==5.1.1 \
  && python3 -m bash_kernel.install
 
 ENV SHELL=/bin/bash \
@@ -105,8 +106,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends             lib
 
 ##################################### APT ######################################
 
-RUN apt-get update \
- && apt-get install -yq --no-install-recommends \
+RUN apt-get -o Acquire::ForceIPv4=true update \
+ && apt-get -o Acquire::ForceIPv4=true install -yq --no-install-recommends \
     python-setuptools \
     python-dev \
  && apt-get clean \
@@ -114,15 +115,20 @@ RUN apt-get update \
 
 ##################################### PIP ######################################
 
+RUN pip install --upgrade pip
+
 RUN pip install  \
     tensorflow-gpu==1.4 \
     matplotlib==2.2.3 \
     ipython==5.8.0 \
-    ipykernel==4.10.0
+    ipykernel==4.10.0 \
+    tornado==5.1.1
 
 ##################################### COPY #####################################
 
-COPY . ${HOME}
+RUN mkdir ${HOME}/learnedsamplingdistributions
+
+COPY . ${HOME}/learnedsamplingdistributions
 
 ################################### CUSTOM #####################################
 
@@ -134,4 +140,4 @@ RUN chown -R ${NB_UID} ${HOME}
 
 USER ${NB_USER}
 
-WORKDIR ${HOME}
+WORKDIR ${HOME}/learnedsamplingdistributions
