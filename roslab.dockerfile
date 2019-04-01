@@ -14,7 +14,8 @@ RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -yq dist-upgrade \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install jupyterlab==0.35.4 bash_kernel==0.7.1 tornado==5.1.1 \
+RUN pip3 install --upgrade pip setuptools \
+ && python3 -m pip install jupyterlab==0.35.4 bash_kernel==0.7.1 tornado==5.1.1 \
  && python3 -m bash_kernel.install
 
 ENV SHELL=/bin/bash \
@@ -115,9 +116,9 @@ RUN apt-get -o Acquire::ForceIPv4=true update \
 
 ##################################### PIP ######################################
 
-RUN pip install --upgrade pip
+RUN pip2 install --upgrade pip
 
-RUN pip install  \
+RUN pip2 install  \
     tensorflow-gpu==1.4 \
     matplotlib==2.2.3 \
     ipython==5.8.0 \
